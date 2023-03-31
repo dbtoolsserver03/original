@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties resource="jdbc.properties"/>
+	<typeAliases>
+		<package name="itat.zttc.shop.model"/>
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+				<property name="url" value="${url}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="itat/zttc/shop/model/User.xml"/>
+		<mapper resource="itat/zttc/shop/model/Address.xml"/>
+	</mappers>
+</configuration>

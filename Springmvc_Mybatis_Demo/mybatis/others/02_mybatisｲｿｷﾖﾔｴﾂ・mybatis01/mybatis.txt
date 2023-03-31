@@ -1,0 +1,7 @@
+1、创建mybatis-config.xml文件，在该文件中完成和数据库的连接设置操作
+2、根据数据表创建相应的实体类
+3、创建mapper文件完成对实体类的映射，该文件同样是xml的文件
+4、创建SQlSession，并且通过SqlSession完成对数据库的操作
+5、最佳实践
+   1、创建相应的MyBatisUtil完成对Session的获取
+   2、不使用annotation完成sql的映射

@@ -1,0 +1,1 @@
+简单工厂违背了java的一个OCP(Open Close P)原则,如果要符合OCP原则，必须针对接口编程

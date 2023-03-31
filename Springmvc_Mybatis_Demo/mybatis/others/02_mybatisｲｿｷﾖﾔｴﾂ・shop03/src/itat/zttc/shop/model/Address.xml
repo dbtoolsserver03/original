@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="itat.zttc.shop.model.Address">
+	<insert id="add" parameterType="Address">
+		insert into t_address (name,phone,postcode,user_id) value
+			(#{name},#{phone},#{postcode},#{user.id})
+	</insert>
+	
+	<update id="update" parameterType="Address">
+		update t_address set 
+			name=#{name},phone=#{phone},postcode=#{postcode} where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_address where id=#{id}
+	</delete>
+	<!-- 当数据库中的字段信息和对象的属性不一致时需要通过resultMap来映射 -->
+	<resultMap type="Address" id="addressMap" autoMapping="true">
+		<id column="a_id" property="id"/>
+		<!-- 使用以下方式进行关联最大的问题就是N+1问题，所以以下取关联的方式不会被使用 -->
+		<!-- <association property="user" column="user_id" javaType="User" select="itat.zttc.shop.model.User.load"/> -->
+		<association property="user" javaType="User">
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"/>
+			<result column="nickname" property="nickname"/>
+			<result column="type" property="type"/>
+		</association>
+	</resultMap>
+	
+	<select id="load" parameterType="int" resultMap="addressMap">
+		select *,t1.id as 'a_id' from t_address t1 right join t_user t2 on(t1.user_id=t2.id) where t1.id=#{id}
+	</select>
+	
+	<!-- #{sx}会使用?进行替代 ，$(xx)会完整将字符串完成替代-->
+	<select id="list" resultMap="addressMap" parameterType="map">
+		select *,t1.id as 'a_id' from t_address t1 right join t_user t2 on(t1.user_id=t2.id) where t2.id=#{userId}
+	</select>
+</mapper>
