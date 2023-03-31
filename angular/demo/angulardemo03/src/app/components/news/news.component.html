@@ -1,0 +1,73 @@
+<h1>angualar 模板里面绑定数据</h1>
+<h2>{{title}}</h2>
+
+<h3>{{msg}}</h3>
+<!-- <h5>{{username}}</h5> -->
+<h5>{{student}}</h5>
+
+
+<br>
+<h6>{{userinfo.username}}</h6>
+
+<div>
+    {{message}}
+</div>
+
+<h1>angular模板里面绑定属性</h1>
+<div title="我是一个div">
+鼠标瞄上去看一下
+</div>
+
+<div [title]="student">
+张三
+</div>
+
+<div>
+    {{content}}
+</div>
+<span [innerHTML]='content' class="red"></span>
+
+
+
+<hr>
+<h1>angualar 模板里面允许做简单的运算</h1>
+1+2={{1+2}}
+
+<hr>
+<h1>angular里面的数据循环</h1>
+<ul>
+    <li *ngFor="let item of arr">
+        {{item}}
+    </li>
+</ul>
+
+
+<ol>
+    <li *ngFor="let item of list">
+        {{item}}
+    </li>
+</ol>
+<br>
+<ul>
+    <li *ngFor="let item of userlist">
+        {{item.username}}---{{item.age}}
+    </li>
+</ul>
+
+<ul>
+    <li *ngFor="let item of cars">
+        {{item.cate}}
+        <ol>
+          <li *ngFor="let car of item.list">
+
+            {{car.title}}--{{car.price}}
+
+          </li>
+        </ol>
+    </li>
+</ul>
+
+
+<br><br><br>
+<br>
+

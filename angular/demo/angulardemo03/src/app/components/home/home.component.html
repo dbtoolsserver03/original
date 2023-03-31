@@ -1,0 +1,98 @@
+<p>home works!</p>
+<h1>
+  引入图片
+</h1>
+
+<img src="assets/images/kamera.jpg" height="50" width="50" alt="相机">
+<br>
+<img [src]="picUrl" alt="google pic">
+<h1>循环数据 显示数据的索引</h1>
+
+<ul>
+  <li *ngFor="let item of list;let key=index">
+    <span *ngIf="key==1" class="red">{{key}}---{{item.title}}</span>
+    <span *ngIf="key!=1">{{key}}---{{item.title}}</span>
+  </li>
+</ul>
+
+<span [ngSwitch]="orderStatus">
+<p *ngSwitchCase="1">
+  1.已经支付
+</p>
+<p *ngSwitchCase="2">
+  2.支付并确认订单
+</p>
+<p *ngSwitchCase="3">
+  3.已经发货
+</p>
+<p *ngSwitchCase="4">
+  4.已经收货
+</p>
+<p *ngSwitchCase="5">
+  5.无效
+</p>
+
+<p *ngSwitchDefault>
+</p>
+</span>
+
+<hr>
+<h1>属性[ngClass][ngStyle]</h1>
+<div class="red">
+  ngClass演示 (尽量不要用DOM来改变CLASS)
+</div>
+
+
+<div [ngClass]="{'red': true}">
+  ngClass演示
+</div>
+
+<div [ngClass]="{'orange':flag,'red': !flag}">
+  ngClass演示xxx
+</div>
+
+<hr>
+<strong>循环数组,让数组的第一个元素的样式为red,第二个为orange</strong>
+<li *ngFor="let item of list;let key=index" [ngClass]="{'red': key==0,'orange': key==1}">
+  {{key}}---{{item.title}}
+</li>
+
+<p style="color:red">我是一个P标签</p>
+<p [ngStyle]="{'color': 'blue'}">我是一个P标签</p>
+
+<p [ngStyle]="{'color': attr}">我是一个P标签</p>
+
+<hr>
+
+<h1>管道</h1>
+{{today|date:'yyyy-MM-dd HH:mm:ss'}}
+<hr>
+
+<h1>事件</h1>
+<strong>{{title}}</strong><br>
+<button (click)="run()">执行结果</button><br>
+<button (click)="getData()">执行方法获取数据</button><br>
+<button (click)="setData()">执行方法改变属性里面的数据</button><br>
+<button (click)="runEvent($event)">执行方法获取事件对象</button><br>
+
+<hr>
+<h1>表单事件 事件对象</h1>
+keyDown:<input type="text" (keydown)="keyDown()"><br>
+keyDownEvent: <input type="text" (keydown)="keyDownEvent($event)">
+
+<hr>
+<h1>双向数据绑定 mvvm 只是针对表单   注意引入 FormModule</h1>
+
+<input type="text" [(ngModel)]="keywords">
+{{keywords}}
+<br>
+<button (click)="changeKeywords()">改变keywords的值</button><br>
+<button (click)="getKeywords()">取出keywords的值</button>
+
+<h1>条件判断语句 ngif</h1>
+<div *ngIf="flag">
+  <img src="assets/images/kamera.jpg" alt="相机">
+</div>
+<div *ngIf="!flag">
+  <img src="assets/images/suica.jpg" alt="相机">
+</div>

@@ -1,0 +1,71 @@
+
+
+http://bbs.itying.com/topic/5bf519657e9f5911d41f2a34
+
+
+angular中的管道(pipe)是用来对输入的数据进行处理，如大小写转换、数值和日期格式化等。
+
+angular中的管道(pipe) 以及自定义管道适用于angular4 angualr5 angualr6 angular7
+
+常用的管道（pipe）有
+
+1. 大小写转换
+<p>{{str | uppercase}}</p>//转换成大写
+<p>{{str | lowercase}}</p>//转换成小写
+2. 日期格式转换
+
+<p>{{today | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+3. 小数位数
+//接收的参数格式为{最少整数位数}.{最少小数位数}-{最多小数位数}
+//保留2~4位小数
+
+<p>{{p | number:'1.2-4'}}</p>
+4. JavaScript 对象序列化
+<p>{{ { name: 'semlinker' } | json }}</p> <!-- Output: { "name": "semlinker" } -->
+5. slice
+<p>{{ 'semlinker' | slice:0:3 }}</p> <!-- Output: sem -->
+6. 管道链
+
+<p>{{ 'semlinker' | slice:0:3 | uppercase }}</p> <!-- Output: SEM -->
+7. 自定义管道
+自定义管道的步骤：
+
+使用 @Pipe 装饰器定义 Pipe 的 metadata 信息，如 Pipe 的名称 - 即 name 属性
+
+实现 PipeTransform 接口中定义的 transform 方法
+
+1.1 WelcomePipe 定义
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+[@Pipe](/user/Pipe)({ name: 'welcome' })
+export class WelcomePipe implements PipeTransform {
+  transform(value: string): string {
+    if(!value) return value;
+    if(typeof value !== 'string') {
+      throw new Error('Invalid pipe argument for WelcomePipe');
+    }
+    return "Welcome to " + value;
+  }
+}
+1.2 WelcomePipe 使用
+
+<div>
+   <p ngNonBindable>{{ 'semlinker' | welcome }}</p>
+   <p>{{ 'semlinker' | welcome }}</p> <!-- Output: Welcome to semlinker -->
+</div>
+2.1 RepeatPipe 定义
+
+import {Pipe, PipeTransform} from '@angular/core';
+[@Pipe](/user/Pipe)({name: 'repeat'})
+export class RepeatPipe implements PipeTransform {
+    transform(value: any, times: number) {
+        return value.repeat(times);
+    }
+}
+2.2 RepeatPipe 使用
+
+<div>
+   <p ngNonBindable>{{ 'lo' | repeat:3 }}</p>
+   <p>{{ 'lo' | repeat:3 }}</p> <!-- Output: lololo -->
+</div>
