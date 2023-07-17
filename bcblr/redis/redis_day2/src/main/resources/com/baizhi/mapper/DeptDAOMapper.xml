@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.DeptDAO">
+
+
+    <!--开启二级缓存 mybatis二级缓存默认全局开启的  cacheEnabled  true 默认值
+        type: 指定自定义cache全限定名
+    -->
+
+
+    <!--和哪个模块共享同一个缓存-->
+    <cache-ref namespace="com.baizhi.dao.UserDAO"/>
+
+
+
+    <select id="findAll" resultType="Dept">
+        select id,name from t_dept
+    </select>
+
+    <select id="find" resultType="Dept" parameterType="String">
+        select id,name from t_dept where id=#{id}
+    </select>
+
+    <insert id="save" parameterType="Dept">
+        insert into t_dept values(#{id},#{name})
+    </insert>
+
+    <update id="update" parameterType="Dept">
+        update t_dept set name=#{name} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from t_dept where id=#{id}
+    </delete>
+
+</mapper>

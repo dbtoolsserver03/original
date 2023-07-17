@@ -1,0 +1,41 @@
+
+server:
+  port: 8989
+  context-path: /redis_day2
+
+spring:
+  redis:
+    #host: 192.168.220.3
+    #port: 7000
+    database: 0
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+    cluster:
+      nodes: 192.168.220.3:7000,192.168.220.3:7001,192.168.220.3:7002,192.168.220.3:7003,192.168.220.3:7004,192.168.220.3:7005,192.168.220.3:7006
+    #sentinel:
+      #master: aa #ÉÚ±øÃû³Æ
+      #nodes: 192.168.220.3:26379
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/redis
+    username: root
+    password: root
+  session:
+    store-type: redis
+
+mybatis:
+  mapper-locations: classpath:com/baizhi/mapper/*.xml
+  type-aliases-package: com.baizhi.entity
+logging:
+  level:
+    root: info
+    com.baizhi.dao: debug
+
+
+
+
+

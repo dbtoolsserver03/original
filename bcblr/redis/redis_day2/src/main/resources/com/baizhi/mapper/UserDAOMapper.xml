@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDAO">
+
+
+    <!--开启二级缓存 mybatis二级缓存默认全局开启的  cacheEnabled  true 默认值
+        type: 指定自定义cache全限定名
+    -->
+
+    <cache type="com.baizhi.cache.RedisCache"/>
+
+
+
+
+    <select id="findAll" resultType="User">
+        select id,name,age,bir from t_user
+    </select>
+
+    <select id="find" resultType="User" parameterType="String">
+        select id,name,age,bir from t_user where id=#{id}
+    </select>
+
+    <insert id="save" parameterType="User">
+        insert into t_user values(#{id},#{name},#{age},#{bir})
+    </insert>
+
+    <update id="update" parameterType="User">
+        update t_user set name=#{name},age=#{age},bir=#{bir} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from t_user where id=#{id}
+    </delete>
+
+</mapper>
