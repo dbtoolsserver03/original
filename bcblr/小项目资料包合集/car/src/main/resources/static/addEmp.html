@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>add Car</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/car/css/bootstrap.min.css"/>
+    <script src="/car/js/vue.js"></script>
+    <script src="/car/js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="wrap" class="container-fluid">
+
+    <div id="top_content" class="row" style="margin: 0 auto;">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div id="header">
+                <div id="topheader">
+                    <h1 class="text-center text-info">欢迎进入汽车管理系统V1.1</h1>
+                </div>
+                <div id="navigation">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" style="margin-top: 20px;">
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <div id="content">
+                <p id="whereami">
+                </p>
+                <h1>
+                    录入汽车信息:
+                </h1>
+                <form>
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" class="form-control" v-model="car.name"  id="name" placeholder="输入汽车品牌">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">输入库存</label>
+                        <input type="text" class="form-control"  v-model="car.number" id="price" placeholder="输入汽车库存">
+                    </div>
+                    <div class="form-group">
+                        <label for="ship">描述</label>
+                        <input type="text" class="form-control"  v-model="car.ship"  id="ship" placeholder="输入描述">
+                    </div>
+                    <div class="form-group">
+                        <label for="bir">上市时间</label>
+                        <input type="text" class="form-control" v-model="car.bir" id="bir" placeholder="请输入上市时间">
+                    </div>
+                    <div class="form-group">
+                        <label for="photos">图片</label>
+                        <input type="file" ref="file" id="photos" class="form-control" name="photos"/>
+                    </div>
+
+                    <button type="button" @click="saveEmp" style="width: 98%" class="btn btn-warning">确认添加</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h5 class="text-center">Concat@136.com</h5>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el: "#wrap",
+        data: {
+            user: {},
+            car: {}
+        },
+        methods: {
+            saveEmp() {
+                //获取文件信息
+                var photo = this.$refs.file.files[0];
+                console.log(photo);
+                const data = new FormData();
+                data.append('photo', photo);
+                data.append("name", this.car.name);
+                data.append("number", this.car.number);
+                data.append("bir", this.car.bir);
+                data.append("ship", this.car.ship);
+                axios.post('/car/car/save', data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }).then(res => {
+                    console.log(res);
+                    if (res.data.state) {
+                        alert(res.data.msg);
+                        location.href = "/car/emplist.html";
+                    } else {
+                        alert(res.data.msg);
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+            }
+        },
+        created() {
+            var item = localStorage.getItem("user");
+            var parse = JSON.parse(item);
+            console.log(parse);
+            if (item) {
+                this.user = parse;
+            } else {
+                location.href = "/car/login.html";
+            }
+        }
+    })
+</script>

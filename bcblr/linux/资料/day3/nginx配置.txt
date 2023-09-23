@@ -1,0 +1,21 @@
+upstream tomcat-servers {
+		#ip_hash;
+		server 192.168.1.116:8888;
+		server 192.168.1.116:8990;
+		server 192.168.1.116:8991;
+}
+	
+	
+	
+	
+
+serverÄÚ²¿:
+	
+location / {
+			 proxy_pass http://tomcat-servers;
+			 proxy_redirect    off;
+			 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			 proxy_set_header X-Real-IP $remote_addr;
+			 proxy_set_header Host $http_host;
+			 proxy_next_upstream http_502 http_504 error timeout invalid_header;
+		   }

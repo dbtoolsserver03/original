@@ -1,0 +1,37 @@
+
+wirteType  负载均衡的类型
+
+    0 所有写操作发送到配置的第一个 writeHost，第一个挂了切到还生存的第二个
+    writeHost，重新启动后已切换后的为准，切换记录在配置文件中:dnindex.properties  存在单节点压力问题
+
+    1 所有写操作都随机的发送到配置的 writeHost  用来解决单节点压力 但是在1.6版本后废弃
+
+
+balance 属性
+
+
+    0   不使用读写分离机制  所有读写 都在writehost进行
+    1   全部的 readHost 与 stand by writeHost 参与 select 语句的负载均衡，简单的说，当双
+        主双从模式(M1->S1，M2->S2，并且 M1 与 M2 互为主备)，正常情况下，M2,S1,S2 都参与 select 语句的负载
+        均衡
+
+    2   wirtehost 和 readhost 都要负责select 的查询
+
+    3   所有读请求随机的分发到 wiriterHost 对应的 readhost 执行，writerHost 不负担读压
+        力，注意 balance=3 只在 1.4 及其以后版本有，1.3 没有。
+
+
+
+switchType 用来在当前使用的主节点宕机之后决定是否自动切换
+
+    -1 表示不自动切换
+    1 默认值，自动切换
+    2 基于 MySQL 主从同步的状态决定是否切换 心跳语句为 show slave status
+    3 基于 MySQL galary cluster 的切换机制（适合集群）（1.4.1）心跳语句为 show status like ‘wsrep%’.
+
+
+
+
+
+
+

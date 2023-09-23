@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>customSites</key>
+	<dict>
+		<key>148C8FE0-B245-41C4-A08C-2D8941C45262</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>bd</string>
+			<key>text</key>
+			<string>Search Baidu for '{query}'</string>
+			<key>url</key>
+			<string>https://www.baidu.com/s?wd={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>2DBA7165-FE72-4F10-9FFD-CFC52B0AF4B4</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>gh</string>
+			<key>text</key>
+			<string>Search github.com for '{query}'</string>
+			<key>url</key>
+			<string>https://github.com/search?q={query}&amp;ref=opensearch</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>4974E45C-41EE-4400-8122-6E7CFE7B7961</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>st</string>
+			<key>text</key>
+			<string>App Store</string>
+			<key>url</key>
+			<string>macappstore://ax.search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>7A8F9923-C786-4A62-8C19-B7265621AFBD</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>tb</string>
+			<key>text</key>
+			<string>Search Taobao for '{query}'</string>
+			<key>url</key>
+			<string>https://s.taobao.com/search?oe=utf-8&amp;f=8&amp;q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>BEA5F1C1-00E3-48C7-8485-77C02A87BC0F</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>bz</string>
+			<key>text</key>
+			<string>Search Bilibili for '{query}'</string>
+			<key>url</key>
+			<string>https://search.bilibili.com/all?keyword={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>CF3D13C4-E85B-4B57-8156-CA6BD35D023C</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>jd</string>
+			<key>text</key>
+			<string>Search JD for '{query}'</string>
+			<key>url</key>
+			<string>https://search.jd.com/Search?enc=utf-8&amp;keyword={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>D22E014C-E5D1-4A2A-89FB-D64D6BE581D6</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>so</string>
+			<key>text</key>
+			<string>Search stackoverflow.com for '{query}'</string>
+			<key>url</key>
+			<string>https://stackoverflow.com/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>F8814CD7-B02D-4564-AD9C-FB06A595F268</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>zh</string>
+			<key>text</key>
+			<string>Search Zhihu for '{query}'</string>
+			<key>url</key>
+			<string>https://www.zhihu.com/search?type=content&amp;q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+		<key>F892231C-A22A-4FF0-8681-9A0D9413DEAF</key>
+		<dict>
+			<key>enabled</key>
+			<false/>
+			<key>keyword</key>
+			<string>doc</string>
+			<key>text</key>
+			<string>Search devdocs.io for '{query}'</string>
+			<key>url</key>
+			<string>https://devdocs.io/#q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

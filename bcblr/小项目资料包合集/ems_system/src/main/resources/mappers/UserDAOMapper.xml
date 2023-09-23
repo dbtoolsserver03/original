@@ -1,0 +1,19 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.baizhi.dao.UserDAO">
+
+    <select id="findByUserName" parameterType="String" resultType="com.baizhi.entity.User">
+        select id,username,password,uptime,lastlogintime,role
+        from t_user
+        where username = #{username}
+    </select>
+
+    <update id="update" parameterType="com.baizhi.entity.User">
+        update t_user set
+         lastlogintime = #{lastlogintime}
+        where id  = #{id}
+    </update>
+
+</mapper>

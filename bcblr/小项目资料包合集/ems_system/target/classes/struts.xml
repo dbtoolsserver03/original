@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+
+    <package name="user" extends="struts-default" namespace="/user">
+
+        <!--ajax login-->
+        <action name="login" class="com.baizhi.controller.UserController" method="login"/>
+
+        <!--getImage-->
+        <action name="getImage" class="com.baizhi.controller.UserController" method="getImage"/>
+
+        <action name="logout"  class="com.baizhi.controller.UserController" method="logout">
+            <result type="redirect">/index.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="dept" extends="struts-default" namespace="/dept">
+
+
+        <!--save-->
+        <action name="save" class="com.baizhi.controller.DeptController" method="save">
+            <result type="redirect">/dept/findAll</result>
+        </action>
+
+        <!--findAll-->
+        <action name="findAll" class="com.baizhi.controller.DeptController" method="findAll">
+            <result name="ok">/dept/list.jsp</result>
+        </action>
+
+        <!--findAllForwardEmpAdd-->
+        <action name="findAllForwardEmpAdd" class="com.baizhi.controller.DeptController" method="findAllForwardEmpAdd">
+            <result>/emp/add.jsp</result>
+        </action>
+
+    </package>
+
+
+    <package name="emp" extends="struts-default" namespace="/emp">
+
+
+        <!--update-->
+        <action name="update" class="com.baizhi.controller.EmpController" method="update">
+            <result type="redirect">/emp/findAll</result>
+        </action>
+
+        <!--findOne-->
+        <action name="findOne" class="com.baizhi.controller.EmpController" method="findOne">
+            <result>/emp/edit.jsp</result>
+        </action>
+
+        <!--delete-->
+        <action name="delete" class="com.baizhi.controller.EmpController" method="delete">
+            <result type="redirect">/emp/findAll</result>
+        </action>
+
+        <!--save-->
+        <action name="save" class="com.baizhi.controller.EmpController" method="save">
+            <result type="redirect">/emp/findAll</result>
+        </action>
+
+        <!--findAll-->
+        <action name="findAll" class="com.baizhi.controller.EmpController" method="findAll">
+            <result name="ok">/emp/list.jsp</result>
+        </action>
+    </package>
+</struts>

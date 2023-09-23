@@ -1,0 +1,62 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.baizhi.dao.EmpDAO">
+
+
+
+
+    <!--empMap-->
+    <resultMap id="empMap" type="com.baizhi.entity.Emp">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="bir" property="bir"/>
+        <result column="deptid" property="deptid"/>
+        <!--处理部门信息-->
+        <association property="dept" javaType="com.baizhi.entity.Dept">
+            <id column="did" property="id"/>
+            <result column="dname" property="name"/>
+            <result column="uptime" property="uptime"/>
+            <result column="numbers" property="numbers"/>
+        </association>
+    </resultMap>
+
+    <!--findAll-->
+    <select id="findAll" resultMap="empMap">
+        select
+          e.id,e.name,e.age,e.bir,e.deptid,
+          d.id did,d.name dname,d.uptime,d.numbers
+        from t_emp e
+        left join t_dept d
+        on e.deptid = d.id
+    </select>
+
+    <!--save-->
+    <insert id="save" parameterType="com.baizhi.entity.Emp" useGeneratedKeys="true" keyProperty="id">
+        insert into t_emp values (#{id},#{name},#{age},#{bir},#{deptid})
+    </insert>
+
+
+
+    <!--delete-->
+    <delete id="delete" parameterType="String">
+        delete from t_emp where id=#{id}
+    </delete>
+
+    <!--findOne-->
+    <select id="findOne" parameterType="String" resultType="com.baizhi.entity.Emp">
+        select e.id,e.name,e.age,e.bir,e.deptid
+        from t_emp e
+        where e.id = #{id}
+    </select>
+
+    <!--update-->
+    <update id="update" parameterType="com.baizhi.entity.Emp">
+        update t_emp
+        set  name=#{name},age=#{age},bir=#{bir},deptid=#{deptid}
+        where id = #{id}
+    </update>
+
+</mapper>

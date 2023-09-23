@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/ems/css/style.css"/>
+    <script src="/ems/js/vue.js"></script>
+    <script src="/ems/js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    2009/11/20
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">main</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                login
+            </h1>
+            <form method="post">
+                <table cellpadding="0" cellspacing="0" border="0"
+                       class="form_table">
+                    <tr>
+                        <td valign="middle" align="right">
+                            用户名:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="text" v-model="username" class="inputgri" name="username"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            密码:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="password"  v-model="password" class="inputgri" name="password"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            选择身份:
+                        </td>
+                        <td valign="middle" align="left">
+                            管理员:<input v-model="role" checked value="admin" type="radio"  >
+                            游客:<input  v-model="role"  value="tourist" type="radio"  >
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <input type="button" @click="login"  class="button" value="登录&raquo;"/>
+                    <!--<input type="button" class="button" onclick="location.href='/ems/toRegister'" value="Regist &raquo;"/>-->
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            ABC@126.com
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el:"#wrap",
+        data:{
+            username:"",
+            password:"",
+            role:"admin"
+        },
+        methods:{
+            login(){
+                console.log(this.username);
+                console.log(this.password);
+                console.log(this.role);
+                axios.get("/ems/user/login?username="+this.username+"&password="+this.password+"&role="+this.role).then(res=>{
+                    console.log(res.data);
+                    if(res.data.state){
+                        alert(res.data.msg);
+                        localStorage.setItem("user",JSON.stringify(res.data.user));
+                        location.href="/ems/index.html";
+                    }else{
+                        alert(res.data.msg);
+                    }
+                });
+            }
+        },
+    })
+</script>

@@ -1,0 +1,7 @@
+1.创建管理员表：id username password
+
+2.处理管理员的登录功能：
+    
+Action    Service  DAO   DB
+3.登录成功后直接跳转：
+员工列表页面（静态）

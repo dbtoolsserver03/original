@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>emplist</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="/ems/css/style.css"/>
+		<script src="/ems/js/vue.js"></script>
+		<script src="/ems/js/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="top_content"> 
+				<div id="header">
+					<div id="rightheader">
+						<p>
+							2009/11/20
+							<a href="javascript:;" @click="logout">退出系统</a>
+							<br />
+						</p>
+					</div>
+					<div id="topheader">
+						<h1 id="title">
+							<a href="/ems/index.html">main</a>
+						</h1>
+					</div>
+					<div id="navigation">
+					</div>
+				</div>
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						Welcome <span v-text="user.username" style="color: red;"></span> !
+					</h1>
+					<table class="table">
+						<tr class="table_header">
+							<td>
+								ID
+							</td>
+							<td>
+								Name
+							</td>
+							<td>
+								Salary
+							</td>
+							<td>
+								Age
+							</td>
+							<td>
+								Bir
+							</td>
+							<td>
+								photo
+							</td>
+							<td v-if="user.role=='admin'">
+								Operation
+							</td>
+						</tr>
+
+						<tr :class="index%2==0?'row1':'row2'" v-for="(u,index) in users" :key="u.id">
+							<td>
+								<span v-text="u.id"/>
+							</td>
+							<td>
+								<span v-text="u.name"/>
+							</td>
+							<td>
+								<span v-text="u.salary"/>
+							</td>
+							<td>
+								<span v-text="u.age"/>
+							</td>
+							<td>
+								<span v-text="u.bir"/>
+							</td>
+							<td>
+								<img :src="u.path" style="width: 100px;max-height: 60px" alt="">
+							</td>
+							<td v-if="user.role=='admin'">
+								<a href="javascript:;" @click="delRow(u.id)">delete emp</a>&nbsp;
+								<a href="javascript:;" @click="findRow(u.id)">update emp</a>
+							</td>
+						</tr>
+
+					</table>
+					<p v-if="user.role=='admin'">
+						<input type="button" class="button" value="添加员工" onclick="location.href='/ems/addEmp.html'"/>
+					</p>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+				ABC@126.com
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el: "#wrap",
+		data: {
+			user: {},
+			users:[],
+		},
+		methods: {
+			logout(){
+				localStorage.removeItem("user");
+				location.reload(true);
+			},
+			delRow(id){
+				axios.get("/ems/emp/delete?id="+id).then(res=>{
+					if(res.data.state){
+						alert(res.data.msg);
+						this.findAll();//查询所有
+					}else{
+						alert(res.data.msg);
+					}
+				});
+			},
+			findAll(){
+				var _this = this;
+				axios.get("/ems/emp/findAll").then(res=>{
+					_this.users = res.data;
+				})
+			},
+			findRow(id){
+				location.href="/ems/updateEmp.html?id="+id;
+			}
+		},
+		created() {
+			var item = localStorage.getItem("user");
+			var parse = JSON.parse(item);
+			console.log(parse);
+			if (item) {
+				this.user = parse;
+			} else {
+				location.href = "/ems/login.html";
+			}
+			//查询所有
+			this.findAll();
+		}
+	})
+</script>

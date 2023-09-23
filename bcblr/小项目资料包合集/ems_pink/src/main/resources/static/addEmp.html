@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>add Emp</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="/ems/css/style.css"/>
+		<script src="/ems/js/vue.js"></script>
+		<script src="/ems/js/axios.min.js"></script>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="top_content">
+					<div id="header">
+						<div id="rightheader">
+							<p>
+								2009/11/20
+								<br />
+							</p>
+						</div>
+						<div id="topheader">
+							<h1 id="title">
+								<a href="/ems/index.html">Main</a>
+							</h1>
+						</div>
+						<div id="navigation">
+						</div>
+					</div>
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						add Emp info:
+					</h1>
+					<form th:action="@{/emp/save}" method="post">
+						<table cellpadding="0" cellspacing="0" border="0"
+							class="form_table">
+							<tr>
+								<td valign="middle" align="right">
+									姓名:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" v-model="emp.name"  class="inputgri" name="name" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									工资:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" v-model="emp.salary" class="inputgri" name="salary" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									年龄:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" v-model="emp.age" class="inputgri" name="age" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									生日:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" v-model="emp.bir" class="inputgri" name="bir" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									选择头像:
+								</td>
+								<td valign="middle" align="left">
+									<input type="file"  ref="file" class="inputgri" name="photos" />
+								</td>
+							</tr>
+						</table>
+						<p>
+							<input type="button" class="button" @click="saveEmp" value="确认添加" />
+						</p>
+					</form>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+					ABC@126.com
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	var app = new Vue({
+		el: "#wrap",
+		data: {
+			user: {},
+			emp:{}
+		},
+		methods: {
+			saveEmp(){
+				//获取文件信息
+				var photo = this.$refs.file.files[0];
+				console.log(photo);
+				const data = new FormData();
+				data.append('photo', photo);
+				data.append("name",this.emp.name);
+				data.append("salary",this.emp.salary);
+				data.append("bir",this.emp.bir);
+				data.append("age",this.emp.age);
+				axios.post('/ems/emp/save', data, {
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
+				}).then(res => {
+					console.log(res);
+					if(res.data.state){
+						alert(res.data.msg);
+						location.href="/ems/emplist.html";
+					}else{
+						alert(res.data.msg);
+					}
+				}).catch(err => {
+					console.log(err);
+				});
+			}
+		},
+		created() {
+			var item = localStorage.getItem("user");
+			var parse = JSON.parse(item);
+			console.log(parse);
+			if (item) {
+				this.user = parse;
+			} else {
+				location.href = "/ems/login.html";
+			}
+		}
+	})
+</script>

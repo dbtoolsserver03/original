@@ -1,0 +1,8 @@
+ <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager"  
+						memcachedNodes="n1:localhost:11211"  
+						sticky="false"  
+						sessionBackupAsync="false"  
+						lockingMode="auto"  
+						requestUriIgnorePattern=".*\.(ico|png|gif|jpg|css|js)$"  
+						transcoderFactoryClass="de.javakaffee.web.msm.JavaSerializationTranscoderFactory"  
+						/>

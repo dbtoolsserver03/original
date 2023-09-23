@@ -1,0 +1,32 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.baizhi.dao.DeptDAO">
+
+
+    <!--findAll-->
+    <select id="findAll" resultType="com.baizhi.entity.Dept">
+        select id,name,uptime,numbers from t_dept
+    </select>
+
+
+    <!--save-->
+    <insert id="save" parameterType="com.baizhi.entity.Dept" useGeneratedKeys="true" keyProperty="id">
+        insert into t_dept values (#{id},#{name},#{uptime},#{numbers});
+    </insert>
+
+    <!--findOne-->
+    <select id="findOne" parameterType="String" resultType="com.baizhi.entity.Dept">
+      select id,name,uptime,numbers from t_dept where id = #{id}
+    </select>
+
+    <!--update-->
+    <update id="update" parameterType="com.baizhi.entity.Dept">
+        update t_dept set
+            name=#{name},
+            numbers = #{numbers}
+        where id = #{id}
+    </update>
+
+
+</mapper>

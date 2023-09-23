@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>emplist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/fruit/css/bootstrap.min.css"/>
+    <script src="/fruit/js/vue.js"></script>
+    <script src="/fruit/js/axios.min.js"></script>
+</head>
+<body>
+<div id="wrap" class="container-fluid">
+    <div id="top_content" class="row" style="margin: 0 auto;">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div id="header">
+                <div id="topheader">
+                    <h1 class="text-center text-info">欢迎进入水果管理系统V1.0</h1>
+                </div>
+                <div id="navigation">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <a href="javascript:;" @click="logout">退出系统</a>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div id="content">
+                <p id="whereami">
+                </p>
+                <h1>
+                    你好 <span v-text="user.username" style="color: red;"></span> !
+                </h1>
+                <table class="table table-striped table-bordered table-hover">
+                    <tr class="table_header">
+                        <td>
+                            ID
+                        </td>
+                        <td>
+                            图片
+                        </td>
+                        <td>
+                            名称
+                        </td>
+                        <td>
+                            价格
+                        </td>
+                        <td>
+                            保质期(单位:月)
+                        </td>
+                        <td>
+                            生产日期
+                        </td>
+
+                        <td v-if="user.role=='admin'">
+                            操作
+                        </td>
+                    </tr>
+
+                    <tr v-for="(u,index) in users" :key="u.id">
+                        <td>
+                            <span v-text="index+1"/>
+                        </td>
+                        <td>
+                            <img :src="u.path" style="width: 100px;max-height: 60px" alt="">
+                        </td>
+                        <td>
+                            <span v-text="u.name"/>
+                        </td>
+                        <td>
+                            <span v-text="u.salary"/>
+                        </td>
+                        <td>
+                            <span v-text="u.age"/>
+                        </td>
+                        <td>
+                            <span v-text="u.bir"/>
+                        </td>
+                        <td v-if="user.role=='admin'">
+                            <a href="javascript:;" @click="delRow(u.id)" class="btn btn-danger">删除</a>&nbsp;
+                            <a href="javascript:;" @click="findRow(u.id)" class="btn btn-info">编辑</a>
+                        </td>
+                    </tr>
+
+                </table>
+                <p v-if="user.role=='admin'">
+                    <input type="button" class="btn btn-success" value="添加水果" onclick="location.href='/fruit/addEmp.html'"/>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="row" style="margin-top: 40px;">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h5 class="text-center">Fruit@136.com</h5>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el: "#wrap",
+        data: {
+            user: {},
+            users: [],
+        },
+        methods: {
+            logout() {
+                localStorage.removeItem("user");
+                location.reload(true);
+            },
+            delRow(id) {
+                axios.get("/fruit/emp/delete?id=" + id).then(res => {
+                    if (res.data.state) {
+                        alert(res.data.msg);
+                        this.findAll();//查询所有
+                    } else {
+                        alert(res.data.msg);
+                    }
+                });
+            },
+            findAll() {
+                var _this = this;
+                axios.get("/fruit/emp/findAll").then(res => {
+                    _this.users = res.data;
+                })
+            },
+            findRow(id) {
+                location.href = "/fruit/updateEmp.html?id=" + id;
+            }
+        },
+        created() {
+            var item = localStorage.getItem("user");
+            var parse = JSON.parse(item);
+            console.log(parse);
+            if (item) {
+                this.user = parse;
+            } else {
+                location.href = "/fruit/login.html";
+            }
+            //查询所有
+            this.findAll();
+        }
+    })
+</script>
