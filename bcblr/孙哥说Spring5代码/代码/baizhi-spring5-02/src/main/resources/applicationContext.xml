@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="userService" class="com.baizhiedu.proxy.a.UserServiceImpl"></bean>
+
+    <bean id="orderService" class="com.baizhiedu.proxy.OrderServiceImpl"/>
+
+   <!-- <bean id="before" class="com.baizhiedu.dynamic.Before"/>
+-->
+
+    <!--<bean id="before" class="com.baizhiedu.dynamic.Before1"/>
+    -->
+
+    <bean id="arround" class="com.baizhiedu.dynamic.Arround"/>
+
+    <aop:config proxy-target-class="true">
+<!--        所有的方法，都作为切入点，加入额外功能 login register-->
+        <aop:pointcut id="pc" expression="execution(* login(..)) or execution(* register(..))"/>
+        <!--组装：目的把切入点 与 额外功能进行 整合-->
+        <aop:advisor advice-ref="arround" pointcut-ref="pc"/>
+    </aop:config>
+
+</beans>

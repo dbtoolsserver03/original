@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--id属性 名字（唯一）
+        class属性 配置全限定名名
+    -->
+    <!--
+        <bean id="person" class="com.baizhiedu.basic.Person"/>
+
+        <bean id="person1" class="com.baizhiedu.basic.Person"/>
+    -->
+
+
+    <!--<bean id="person" class="com.baizhiedu.basic.Person">
+        &lt;!&ndash;  <property name="id">
+              <value>11</value>
+          </property>
+        &ndash;&gt;
+          <property name="id" value="11"/>
+        &lt;!&ndash;  <property name="name">
+              <value>suns</value>
+          </property>
+        &ndash;&gt;
+          <property name="name" value="xiaohei"/>
+          <property name="emails">
+             <list>
+                 <value>suns@zparkhr.com.cn</value>
+                 <value>liucy@zparkhr.com.cn</value>
+                 <value>chenyn@zparkhr.com.cn</value>
+            </list>
+          </property>
+          <property name="tels">
+              <set>
+                  <value>138111111</value>
+                  <value>139111111</value>
+                  <value>166111111</value>
+                  <value>166111111</value>
+                  <value>166111111</value>
+              </set>
+          </property>
+          <property name="addresses">
+              <list>
+                  <value>zpark</value>
+                  <value>shangdi</value>
+                  <value>xierq</value>
+                  <value>xierq</value>
+                  <value>xierq</value>
+              </list>
+          </property>
+          <property name="qqs">
+              <map>
+                 <entry>
+                     <key><value>suns</value></key>
+                     <value>3434334343</value>
+                 </entry>
+                 <entry>
+                     <key><value>chenyn</value></key>
+                     <value>73737373</value>
+                 </entry>
+              </map>
+          </property>
+          <property name="p">
+              <props>
+                 <prop key="key1">value1</prop>
+                 <prop key="key2">value2</prop>
+              </props>
+          </property>
+    </bean>-->
+
+    <!-- <bean id="userService" class="com.baizhiedu.basic.UserServiceImpl">
+           <property name="userDAO">
+               <bean class="com.baizhiedu.basic.UserDAOImpl"/>
+           </property>
+     </bean>-->
+
+    <bean id="userDAO" class="com.baizhiedu.basic.UserDAOImpl"></bean>
+
+    <!--<bean id="userService" class="com.baizhiedu.basic.UserServiceImpl">
+        <property name="userDAO">
+            <ref bean="userDAO"/>
+        </property>
+    </bean>-->
+
+    <!-- <bean id="userService" class="com.baizhiedu.basic.UserServiceImpl">
+          <property name="userDAO" ref="userDAO"/>
+     </bean>-->
+
+
+    <bean id="person" class="com.baizhiedu.basic.Person" p:name="xiaojr" p:id="100"/>
+
+    <bean id="userService" class="com.baizhiedu.basic.UserServiceImpl" p:userDAO-ref="userDAO"></bean>
+
+
+    <bean id="customer" class="com.baizhiedu.basic.constructer.Customer">
+        <constructor-arg type="int">
+            <value>37</value>
+        </constructor-arg>
+    </bean>
+
+<!--
+        <bean id="conn" class="com.baizhiedu.factorybean.ConnectionFactoryBean">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/suns?useSSL=false"/>
+            <property name="username" value="root"/>
+            <property name="password" value="123456"/>
+        </bean>
+    -->
+
+    <!-- <bean id="connFactory" class="com.baizhiedu.factorybean.ConnectionFactory"></bean>
+
+     <bean id="conn"  factory-bean="connFactory" factory-method="getConnection"/>
+-->
+    <bean id="conn" class="com.baizhiedu.factorybean.StaticConnectionFactory" factory-method="getConnection"/>
+
+
+    <bean id="account" class="com.baizhiedu.scope.Account"/>
+
+    <bean id="product" scope="prototype" class="com.baizhiedu.life.Product" init-method="myInit" destroy-method="myDestroy" >
+          <property name="name" value="suns"/>
+    </bean>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</beans>

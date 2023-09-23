@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<bean id="customer" class="com.baizhiedu.bean.Customer">
+        <property name="id" value="2"/>
+        <property name="name" value="xiaohuahua"/>
+    </bean>
+
+    <bean id="userDAO" class="com.baizhiedu.injection.UserDAOImplNew"/>
+-->
+    <bean id="userDAO" class="com.baizhiedu.injection.UserDAOImpl"/>
+
+
+    <!--<context:component-scan base-package="com.baizhiedu.four"/>-->
+
+   <!-- <bean id="account" class="com.baizhiedu.four.Account"/>
+
+    <context:property-placeholder location="classpath:four.properties"/>-->
+
+
+<!--    <bean id="propertyholder" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+         <property name="location" value="classpath:four.properties"/>
+    </bean>-->
+
+</beans>

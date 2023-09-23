@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--Spring创建MyDateConverter类型对象
+    <bean id="myDateConverter" class="com.baizhiedu.converter.MyDateConverter">
+        <property name="pattern" value="yyyy-MM-dd"/>
+    </bean>
+
+    &lt;!&ndash;用于注册类型转换器&ndash;&gt;
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+           <set>
+               <ref bean="myDateConverter"/>
+           </set>
+        </property>
+
+    </bean>-->
+
+    <bean id="person" class="com.baizhiedu.converter.Person">
+        <property name="name" value="suns"/>
+        <property name="birthday" value="2020/04/01"/>
+    </bean>
+
+
+
+</beans>

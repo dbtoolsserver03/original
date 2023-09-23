@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<context:component-scan base-package="com.baizhiedu">
+         <context:exclude-filter type="assignable" expression="com.baizhiedu.bean.User"/>
+
+        &lt;!&ndash;<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        &ndash;&gt;
+         <context:exclude-filter type="aspectj" expression="com.baizhiedu.injection..*"/>
+&lt;!&ndash;
+        <context:exclude-filter type="aspectj" expression="*..User"/>
+&ndash;&gt;
+    </context:component-scan>
+-->
+
+
+    <context:component-scan base-package="com.baizhiedu" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
+
+    <bean id="user" class="com.baizhiedu.bean.User">
+        <property name="id" value="10"/>
+    </bean>
+
+    <!--<bean id="userService" class="com.baizhiedu.injection.UserServiceImpl">
+        <property name="userDAO" ref="userDAOImpl"/>
+    </bean>
+    -->
+
+
+    <!--<context:property-placeholder location="classpath:init.properties"/>
+-->
+</beans>
+
