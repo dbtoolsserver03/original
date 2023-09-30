@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowAll</title>
+</head>
+<body>
+
+
+
+    <ul th:each="user,userStat:${users}">
+        <li><span th:text="${userStat.index}"/><span th:text="${user.id}"/></li>
+        <li><span th:text="${user.name}"/></li>
+        <li><span th:text="${user.age}"/></li>
+        <li><span th:text="${#dates.format(user.bir,'yyyy-MM-dd')}"/></li>
+    </ul>
+
+
+    <h1>this is dev tools</h1>
+</body>
+</html>
