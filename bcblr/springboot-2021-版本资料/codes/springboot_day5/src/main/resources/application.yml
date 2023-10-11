@@ -1,0 +1,30 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /springboot_day5
+    jsp:
+      init-parameters:
+        development: true
+
+
+spring:
+  mvc:
+    view:
+      prefix: /    # 配置视图前缀
+      suffix: .jsp # 配置视图后缀
+
+  servlet:
+    multipart:   #修改文件上传的大小限制
+      max-request-size: 120MB #运行请求传递文件大小最大为10M
+      max-file-size: 120MB     #运行服务器可以处理的最大文件大小
+
+  profiles:
+    active: local #激活本地配置生效
+
+
+  # 调整日志
+logging:
+  level:
+    root: info
+    com.baizhi: debug #开启com.baizhi包中所有debug日志
+

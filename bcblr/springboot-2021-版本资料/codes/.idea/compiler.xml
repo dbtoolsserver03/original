@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ems-jsp" />
+        <module name="springboot_day8_restful" />
+        <module name="ssm" />
+        <module name="springboot_day1" />
+        <module name="springboot_day2" />
+        <module name="springboot_day10" />
+        <module name="springboot_day3" />
+        <module name="ems-thymeleaf" />
+        <module name="springboot_day9" />
+        <module name="springboot_day4" />
+        <module name="springboot_day5" />
+        <module name="springboot_day6" />
+        <module name="springboot_day7" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ems-jsp" target="1.8" />
+      <module name="ems-thymeleaf" target="1.8" />
+      <module name="springboot_day1" target="1.8" />
+      <module name="springboot_day10" target="1.8" />
+      <module name="springboot_day2" target="1.8" />
+      <module name="springboot_day3" target="1.8" />
+      <module name="springboot_day4" target="1.8" />
+      <module name="springboot_day5" target="1.8" />
+      <module name="springboot_day6" target="1.8" />
+      <module name="springboot_day7" target="1.8" />
+      <module name="springboot_day8_restful" target="1.8" />
+      <module name="springboot_day9" target="1.8" />
+      <module name="ssm" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ems-jsp" options="-parameters" />
+      <module name="ems-thymeleaf" options="-parameters" />
+      <module name="springboot_day1" options="-parameters" />
+      <module name="springboot_day10" options="-parameters" />
+      <module name="springboot_day2" options="-parameters" />
+      <module name="springboot_day3" options="-parameters" />
+      <module name="springboot_day4" options="-parameters" />
+      <module name="springboot_day5" options="-parameters" />
+      <module name="springboot_day6" options="-parameters" />
+      <module name="springboot_day7" options="-parameters" />
+      <module name="springboot_day8_restful" options="-parameters" />
+      <module name="springboot_day9" options="-parameters" />
+    </option>
+  </component>
+</project>

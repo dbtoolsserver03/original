@@ -1,0 +1,13 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /springboot_day7
+
+
+
+# 配置 thymeleaf
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/  #指定thymeleaf模板前缀目录
+    suffix: .html                  #指定模板的后缀
+    cache: false                    #是否开启thymeleaf缓存 默认值是true开启缓存  在开发过程中推荐使用false

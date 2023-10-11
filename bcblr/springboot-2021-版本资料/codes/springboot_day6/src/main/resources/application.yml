@@ -1,0 +1,26 @@
+server:
+  port: 8989      # 一旦使用外部服务器进行部署,这个端口失效
+  servlet:
+    context-path: /springboot_day6  # 一旦使用外部服务器部署,这个项目名失效
+    jsp:
+      init-parameters:
+        development: true
+
+spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+
+
+
+file:
+  download:
+    dir: /Users/chenyn/Desktop/线上课/项目阶段/01springboot/codes/springboot_day6/download  #指定下载目录测试环境
+    #dir: /home/download  生产环境
+
+logging:
+  level:
+    root: info
+    com.baizhi: debug
+

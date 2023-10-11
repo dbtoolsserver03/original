@@ -1,0 +1,28 @@
+
+
+mysql:
+  host: ENC(qExbV8bdC2GLS6/SByV94meXFdaIGFPQ)
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${mysql.host}:3306/ems-jsp?chatacterEncoding=UTF-8
+    username: ENC(cv2W1fM0vSNpx4R12MsY2Q==)
+    password: ENC(cv2W1fM0vSNpx4R12MsY2Q==)
+
+mybatis:
+  mapper-locations: classpath:com/baizhi/mapper/*.xml
+  type-aliases-package: com.baizhi.entity
+
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES           #指定加密算法
+    #password:  aaaxxx@23232sdsfds         #指定秘钥 -Djasypt.encryptor.password=aaaxxx@23232sdsfds  nohuo java -jar -Djasypt.encryptor.password=aaaxxx@23232sdsfds  xxx.jar

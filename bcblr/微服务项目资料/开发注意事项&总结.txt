@@ -1,0 +1,409 @@
+1.项目总体周期:
+	5天     项目截止15号  16号讲项目(优化)- 17天
+	课程结束 22号
+	
+========================================================================================
+2.项目重要性
+	面试简历  写这个项目
+	1.你们自己写
+	2.有问题优先自己解决    百度       同学   ===> 我
+	3.学过东西(弄出来)
+	4.碰撞 新鲜想法   面试法宝(项目遇到哪些难点?  针对解决方案? 思考  难忘)
+========================================================================================
+3.项目开发说明
+	今天+周日: 后台管理   
+	
+	下周一======下周四:进入前端系统开发
+=========================================================================================
+4.项目
+	应学======>应学改版================>App类型项目
+	
+	1).系统开发说明
+		
+		后台管理系统:(springcloud+vue)前后端分离形式进行开发
+		前端App系统: (springcloud+vue)前后端分离形式开发
+		
+	
+	2).APP项目
+		需求分析: 存在哪些功能  有哪些模块
+			视频模块
+				1.视频列表
+				2.视频详情
+				3.视频评论
+			分类模块                后台管理系统(对列表增删改查)
+				1.类别列表
+				2.根据类别查询视频
+			用户模块
+				1.发布视频
+				2.搜索视频
+				3.用户登录
+				4.用户视频点赞
+				5.用户收藏视频
+				6.用户不喜欢视频
+				7.我的历史记录
+				8.我的收藏
+				9.用户登录
+				10.编辑用户信息
+				11.已登录
+				12.退出登录
+				13.短信验证码功能
+		概要设计: 库表设计  1.分析系统多少张表  2.表与表之间关系   3.确定表中字段
+			视频表
+			用户表
+			分类表(一张表自连接)
+		详细设计: 功能图  流程图  伪代码标注 全部省略
+		编码:(环境搭建+业务功能实现)
+		
+		1.后台管理员  amdin
+		2.app端用户表 user
+		3.类别表      category
+		4.视频表      video
+		5.评论表      comment 
+		6.收藏表      favorite
+		7.播放记录表  played
+		8.粉丝关注表  following
+
+=======================================================================================================
+1.编码
+
+	yingxue-admin
+	后台系统开发:  (模块化增删改查)  统计分析
+		后端功能:  1.类别增删改查    2.用户列表(用户查询  模糊查询)     3.视频列表(视频列表 模糊查询)  4.后台管理员登录 退出
+		技术选型:  springboot + springcloud + vue + docker(nacos........) + mysql
+		后台项目结构:
+			yingxue-admin                     =====> 维护后端系统全局父项目
+				yingxue-commons                   =====> 用来存放后端系统公共代码工具类....
+				yingxue-users                     =====> 用来完成用户列表
+				yingxue-category                  =====> 用来完成类别接口
+				yingxue-videos                    =====> 用来完成视频接口
+				yingxue-admin                     =====> 用来完成后端管理员操作
+				yingxue-gateway                   =====> 后端系统网关服务  路由转发 +  跨域处理     localhost:8888   9999
+			
+			
+			后端管理系统页面  vue+elementui 界面
+			
+		环境搭建:
+			0.库表入库
+			1.构建项目结构   
+			2.每个微服务构建一个独立springboot应用
+			3.启动nacos 将每个应用作为微服务注册到nacos
+			4.创建服务网关 配置对应路由规则  + 跨域
+			5.根据接口文档开发接口  连接对应数据  json   postman
+			
+			6.启动后端界面连接网关进行请求交互  去后端打包之后admin-dist/js/app.js 修改网关接口
+			
+	yingxue-api
+	前端系统开发:
+		技术选型:  springboot + springcloud + vue + docker(nacos........) + mysql
+		项目结构:
+			yingxue-api   全局父项目
+				yingxue-commons  前端系统公共工具  代码
+				yingxue-users  用户服务
+				yingxue-category 类别服务
+				yingxue-videos 视频服务
+				yingxue-gateway网关服务
+				......
+				....
+		
+		
+		环境搭建:
+			1.构建项目结构
+			2.每个微服务构建一个独立springboot应用
+			3.启动nacos 将每个应用作为微服务注册到nacos
+			4.创建服务网关 配置对应路由规则  + 跨域
+			5.根据接口文档开发接口  连接对应数据  json   postman
+====================================================================================
+应学后端服务总结
+	
+	1.redis 内存型数据库  注意: redis服务器不可能只存储和用户认证相关数据  redis 服务器一定存储业务数据
+	
+		推荐使用redis方式: 在书写业务相关数据时一定要加入对应业务Key信息   一般是一个固定写死常量
+			token 048FEDB79AC1254AD0BEFC999E32FC13 
+			写入Redis:  TOKEN_048FEDB79AC1254AD0BEFC999E32FC13  TOKEN:048FEDB79AC1254AD0BEFC999E32FC13
+			            CACHE_...  
+						CODE
+						POHNE
+		
+			如下设计:
+			public interface RedisPrefix {
+				String TOKEN_KEY = "TOKEN:";//代表用户认证tokenkey
+				......
+			}
+
+	
+	2.redisTemplate使用问题
+		问题: 
+			1.redisTemplate 操作对象  key value都是对象      keyString  value 对象
+			2.redisTemplatye 存放对象必须实现对象序列化      
+		
+		改造:
+			1.key 使用String序列化方式
+			2.value 放入对象   修改json序列化方式  jackson 
+		
+		@Configuration
+		public class RedisTemplateConfig {
+			@Autowired
+			public RedisTemplateConfig(RedisTemplate redisTemplate) {
+				//1.创建jackson序列化方式
+				Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
+						Object.class);
+				//2..创建object mapper
+				ObjectMapper objectMapper = new ObjectMapper();
+				//3.允许访问对象中所有属性
+				objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+				//4.转换json过程中保存类的信息
+				objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
+						JsonTypeInfo.As.WRAPPER_ARRAY);
+				jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+				//5.设置value的序列化规则和 key的序列化规则   //key String hashkey:String hashvalue: json序列化
+				StringRedisSerializer stringKeySerializer = new StringRedisSerializer();
+				redisTemplate.setKeySerializer(stringKeySerializer);
+				//6.jackson2JsonRedisSerializer就是JSON序列号规则，
+				redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+				//6.5 设置hash类型key value 序列化方式
+				redisTemplate.setHashKeySerializer(stringKeySerializer);
+				redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+				//7工厂创建redisTemplate对象之后在进行配置
+				redisTemplate.afterPropertiesSet();
+			}
+		}
+		
+	
+	3.在网关中统一处理接口权限认证问题
+		@Component  //代表在工厂中创建对象   @configuration 配置     @Component  在工厂中创建对象   使用 filtes -Token
+		public class TokenGatewayFilterFactory extends AbstractGatewayFilterFactory<TokenGatewayFilterFactory.Config> {
+
+			private static final Logger log = LoggerFactory.getLogger(TokenGatewayFilterFactory.class);
+
+			private RedisTemplate redisTemplate;
+
+			@Autowired
+			public TokenGatewayFilterFactory(RedisTemplate redisTemplate) {
+				super(Config.class);
+				this.redisTemplate = redisTemplate;
+			}
+
+			//Config 参数就是基于当前中Config创建对象
+			@Override
+			public GatewayFilter apply(Config config) {
+				return new GatewayFilter() {    // servlet service httpServletRequest  httpServletResponse 传统web springmvc   springwebflux new web模型 //filter   request response filterChain.dofilter(request,response)
+					@Override
+					//参数1: exchange 交换机
+					public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+						log.info("config required token: {}", config.requiredToken);
+						log.info("config name: {}", config.name);
+						if (config.requiredToken) {
+							//1.获取token信息
+							if (exchange.getRequest().getQueryParams().get("token") == null)
+								throw new RuntimeException("非法令牌!");
+							String token = exchange.getRequest().getQueryParams().get("token").get(0);
+							log.info("token:{}", token);
+							//2.根据token信息去redis获取
+							if (!redisTemplate.hasKey(RedisPrefix.TOKEN_KEY + token)) throw new RuntimeException("不合法的令牌!");
+						}
+						return chain.filter(exchange);
+					}
+				};
+			}
+
+
+			//用来配置将使用filter时指定值赋值给Config中哪个属性
+			@Override
+			public List<String> shortcutFieldOrder() {
+				return Arrays.asList("requiredToken", "name");
+			}
+
+
+			//自定义配置类
+			public static class Config {
+				private boolean requiredToken;  //false
+				private String name;
+
+				public String getName() {
+					return name;
+				}
+
+				public void setName(String name) {
+					this.name = name;
+				}
+
+				public boolean isRequiredToken() {
+					return requiredToken;
+				}
+
+				public void setRequiredToken(boolean requiredToken) {
+					this.requiredToken = requiredToken;
+				}
+			}
+
+
+		}
+		
+	4.网关异常处理机制 webflux 编程
+	
+		1.自定义类 
+		
+		@Order //order执行顺序:  int 代表多个异常处理时哪个先执行
+		@Configuration
+		public class GlobalExceptionConfiguration implements ErrorWebExceptionHandler{
+		
+		
+		}
+		
+		
+		2.实现类中
+		@Override
+		public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+			
+		}
+		
+		
+		
+		@Configuration
+		public class GlobalExceptionConfiguration implements ErrorWebExceptionHandler {
+			//日志对象
+			private static final Logger log = LoggerFactory.getLogger(GlobalExceptionConfiguration.class);
+
+
+			@Override //参数1: request response   ex:出现异常时异常对象
+			public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+				Map<String, String> result = new HashMap<>();
+
+				//1.获取响应对象
+				ServerHttpResponse response = exchange.getResponse();
+
+				//2.response是否结束  多个异常处理时候
+				if (response.isCommitted()) {
+					return Mono.error(ex);
+				}
+
+				//2.设置响应头类型
+				response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+
+				//3.设置响应状态吗
+				if (ex instanceof IllegalTokenException) {
+					response.setStatusCode(HttpStatus.FORBIDDEN);
+				} else {
+					response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				//4.设置响应内容
+				return response
+						.writeWith(Mono.fromSupplier(() -> {
+							DataBufferFactory bufferFactory = response.bufferFactory();
+							result.put("msg", ex.getMessage());
+							ObjectMapper objectMapper = new ObjectMapper();
+							try {
+								return bufferFactory.wrap(objectMapper.writeValueAsBytes(result));
+							} catch (JsonProcessingException e) {
+								e.printStackTrace();
+								return null;
+							}
+						}));
+			}
+		}
+		
+====================================================================================================
+前端系统说明:
+	
+	1.系统层次划分
+		yingxue-api   父项目维护依赖
+			yingxue-commons  用来存储前端系统公共依赖
+			yingxue-categories  用来完成类别相关服务
+			yingxue-gateway     用来网关服务
+			yingxue-search      用来完成检索服务
+			yingxue-sms         用来完成短信服务
+			yingxue-users       用来完成用户服务
+			yingxue-videos      用来完成视频服务
+		
+	
+	2.接口分析 
+	
+	
+	3.前端服务部署注意事项
+	
+		yingxue-sms           短信服务   2个节点
+		yingxue-users         用户服务   5个节点
+		yingxue-videos        视频服务   3个节点
+		yingxue-gateway       网关服务 权限处理 接口保护  接口频率限制  全局异常处理  2个节点
+		yingxue-search        搜索服务   3个节点
+		yingxue-categories    类别服务   2个节点
+		
+===================================================================================================================================
+项目中面试总结:
+
+	0).自我介绍
+		a.你是谁   b.你目前在工作 做的是什么java开发   c.主要开发项目是一个微服务 应学 项目    
+		
+	
+	1).描述最近项目 简单介绍项目
+		a.项目是一个什么类型项目? 应学项目   "社交类 学习类 APP项目"  "社交类项目用户可以发布视频观看别人发布视频这样APP项目 类似"
+		b.项目使用什么样技术选型? 整个项目采用基于springcloud+springcloudalibaba构建微服务项目,整体采用前后端分离架构
+		c.项目中含有功能模块 拆分服务?     用户模块 视频模块 等   主要负责什么: 后端管理系统相关接口开发 以及前端app端视频接口的开发和调试
+	
+	2).说一说你们项目整体详细整个项目架构?
+	    
+		后端架构: maven 聚合形式进行开发  拆分服务: 短信 搜索 用户服务 视频  公共模块(业务工具类)
+		
+		通信方式: http+restful  json
+		
+		前端架构: 后台管理系统基于vue进行开发的,  前端APP开发 前端人员  
+		接口文档生成工具:  YAPI 接口描述工具
+	
+	3).SpringCloud 版本?
+		SpringCloud: H版本  SR6
+		SpringBoot: 2.2.5.RELEASE
+		SpringCloud Alibaba: 2.2.1.RELEASE
+		
+		SpringCloud 最新版本多少? 2020版本
+	
+	4).SpringCloud 常见组件?
+		服务注册中心 & 统一配置中心: nacos
+		服务间通信组件 :  Openfeign 底层默认集成Ribbon组件 实现负载均衡  2.RestTemplate(Spring)+ribbon(负载均衡客户端组件)
+		服务网关组件   : gateway
+		服务熔断 限流  : sentinel  流量防卫兵
+	
+	5).你在开发这个项目过程中你觉得你的设计有哪些亮点?
+	
+		a.使用redis完成整个系统 喜欢  不喜欢  接口?  1.redis存储   2.set结构  3.二次组织 hash 结构
+		
+		b.利用Rabbitmq异步完成数据库到索引库数据同步 
+		    1.上传视频接口 用户服务 接收到视频之后 上传视频oss        
+			2.openfeign 调用视频服务 保存视频  视频数据录入ES(时不时会出现错误) openfeign默认超时1s  增加超时openfeign超时时间
+			3.openfeign 调用视频服务 保存视频  利用rabbitmq完成视频数据到Es索引库异步处理
+			
+		c.前端类别接口在处理过程中? 
+			1.类别数据可能很少发生变化,类别接口引入缓存处理,缓存处理机制我才用多级缓存技术
+				一级缓存(分布式)使用基于redis实现: redis将业务方法返回值存储到redis   key MD5(类名+方法名+参数列表)  value
+				二级缓存(本地缓存)使用mybatis自身cache实现 本地缓存:只能在当前服务器可用
+				注意: DAO缓存和Service层缓存主要区别 业务层缓存缓存直接是结果 、Dao中缓存是没有经过业务处理时候数据
+		
+		
+		d.gateway 权限处理设计   
+			前提: 所有服务接口都需权限认证之后才能访问?
+				1.一开始只是在自己服务中加入一个拦截器  通过拦截器判断当前请求是否认证?
+				2.最终我在开发将整个权限处理放入gateway网关中处理(全局filter,filterFactory(StripFilter))
+				3.自定义FilterFactory TokenFilterFactory redis 是否存在token  -token
+				4.自定义网关异常处理机制 更适合前后端分离系统 异常返回json格式数据 不在是原始html
+		
+	
+	6).接口安全如何考虑?
+		1).所有接口必须使用token才能访问?
+		2).基于redis限制接口访问频率?
+
+==========================================================================================================
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+		
+		
+
+	

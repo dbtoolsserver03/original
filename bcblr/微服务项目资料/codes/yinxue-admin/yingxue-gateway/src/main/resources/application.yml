@@ -1,0 +1,55 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    nacos:
+      server-addr: 10.15.0.3:8848
+    gateway:
+      routes: #用来配置路由规则
+        # admins router
+        - id: admins_router
+          uri: lb://API-ADMINS
+          predicates:
+            - Path=/admin/demos,/admin/tokens,/admin/admin-user,/admin/tokens/**
+          filters:
+            - StripPrefix=1   #去掉请求前缀filter    int数字  1 去掉一级   2 去掉两级
+
+        # category router
+        - id: category_router
+          uri: lb://API-CATEGORYS
+          predicates:
+            - Path=/admin/categories/**
+          filters:
+            - StripPrefix=1   #去掉请求前缀filter    int数字  1 去掉一级   2 去掉两级
+            - Token=true,xiaochen      #进行token认证filter
+
+        # videos router
+        - id: videos_router
+          uri: lb://API-VIDEOS
+          predicates:
+            - Path=/admin/videos/**
+          filters:
+            - StripPrefix=1   #去掉请求前缀filter    int数字  1 去掉一级   2 去掉两级
+            - Token=true
+
+        # users router
+        - id: users_router
+          uri: lb://API-USERS
+          predicates:
+            - Path=/admin/users/**
+          filters:
+            - StripPrefix=1   #去掉请求前缀filter    int数字  1 去掉一级   2 去掉两级
+            - Token=true
+
+      globalcors: # 跨域配置处理
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+  redis:
+    host: 10.15.0.3
+    port: 6379
+

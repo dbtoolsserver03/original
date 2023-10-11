@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baizhi.dao.CategoryDao">
+
+    <resultMap type="com.baizhi.entity.Category" id="CategoryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="deletedAt" column="deleted_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap type="com.baizhi.entity.Category" id="CategoriesMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <!--封装孩子-->
+        <collection property="children" javaType="list" ofType="com.baizhi.entity.Category">
+            <id property="id" column="cid" jdbcType="INTEGER"/>
+            <result property="name" column="cname" jdbcType="VARCHAR"/>
+            <result property="parentId" column="cparentId"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryByFirstLevel" resultMap="CategoriesMap">
+        select c.id,
+               c.name,
+               c1.id        cid,
+               c1.name      cname,
+               c1.parent_id cparentId
+        from yingxue.category c
+                 left join yingxue.category c1
+                           on c.id = c1.parent_id
+        where c.parent_id is null
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CategoryMap">
+        select id,
+               name,
+               parent_id,
+               created_at,
+               updated_at,
+               deleted_at
+        from yingxue.category
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CategoryMap">
+        select id,
+               name,
+               parent_id,
+               created_at,
+               updated_at,
+               deleted_at
+        from yingxue.category limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CategoryMap">
+        select
+        id, name, parent_id, created_at, updated_at, deleted_at
+        from yingxue.category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+            <if test="deletedAt != null">
+                and deleted_at = #{deletedAt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列
+        useGeneratedKeys: //针对于mysql数据库可用  使用数据自动递增id  5
+        keyProperty:     //将数据库本次生成id 赋值给参数对象的哪个属性  id
+    -->
+    <insert id="insert" parameterType="com.baizhi.entity.Category" keyProperty="id" useGeneratedKeys="true">
+        insert into yingxue.category(name, parent_id, created_at, updated_at, deleted_at)
+        values (#{name}, #{parentId}, #{createdAt}, #{updatedAt}, #{deletedAt})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into yingxue.category(name, parent_id, created_at, updated_at, deleted_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.parentId}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into yingxue.category(name, parent_id, created_at, updated_at, deleted_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.parentId}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt})
+        </foreach>
+        on duplicate key update
+        name = values(name) , parent_id = values(parent_id) , created_at = values(created_at) , updated_at =
+        values(updated_at) , deleted_at = values(deleted_at)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update yingxue.category
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from yingxue.category
+        where id = #{id}
+    </delete>
+
+</mapper>
+

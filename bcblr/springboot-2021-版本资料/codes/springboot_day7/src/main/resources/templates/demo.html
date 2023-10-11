@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用来测试thymeleaf语法</title>
+    <!--
+        th:href="@{/}"  @{/}: 获取应用名称
+    -->
+    <link rel="stylesheet" th:href="@{/demo.css}">
+    <script th:src="@{/demo.js}"></script>
+    <script>
+        test();
+        //1.通过js代码获取应用名  通过thymeleaf语法获取项目名 使用thymeleaf内联表达式 [[thymeleaf]]
+        let contextPath = "[[@{/}]]";
+        console.log("项目名",contextPath);
+    </script>
+</head>
+<body>
+
+<h1>thymeleaf语法基本使用</h1>
+
+
+<!-- th:text="${属性名}" 获取数据 作用: 直接将获取数据以文本形式渲染到页面中 -->
+<!-- th:utext="${属性名}" 获取数据 作用: 直接将获取数据先解析成html标签在渲染到页面 -->
+<h4>获取单个数据: <span th:text="${name}"></span></h4>
+<h4>获取单个数据: <span th:text="${age}"></span></h4>
+<h4>获取单个数据: <span th:utext="${content}"></span></h4>
+
+<input type="text" name="username" th:value="${name}">
+<input type="text" name="age" th:value="${age}">
+
+
+<!-- 格式化日期:${#dates.format(格式化值,'格式')} -->
+<h4>获取对象类型数据:
+    id:<span th:text="${user.id}"/>
+    name:<span th:text="${user.name}"/>
+    salary:<span th:text="${user.salary}"/>
+    birthday:<span th:text="${#dates.format(user.birthday,'yyyy-MM-dd HH:mm:ss')}"/>
+</h4>
+
+
+<h4>获取集合类型数据:</h4>
+
+<!--遍历数据 th:each="变量(current_element当前遍历元素),变量(state遍历状态对象):集合" 遍历-->
+<ul>
+    <li th:each="user,state:${users}">
+        state count: <span th:text="${state.count}"></span>
+        state odd : <span th:text="${state.odd}"></span>
+        state even : <span th:text="${state.even}"></span>
+        state size : <span th:text="${state.size}"></span>
+        id: <span th:text="${user.id}"></span>
+        name: <span th:text="${user.name}"></span>
+        salary: <span th:text="${user.salary}"></span>
+        birthday: <span th:text="${#dates.format(user.birthday,'yyyy年MM月dd日')}"></span>
+    </li>
+</ul>
+
+<h4>有条件的展示数据:</h4>
+
+<!-- th:if="${age>=23}" 作用: 用条件展示数据-->
+<div style="width: 100px;height: 100px;background: rebeccapurple;" th:if="${age>23}">
+    我是rebeccapurple
+</div>
+
+<div style="width: 100px;height: 100px;background: greenyellow;" th:if="${age<=23}">
+    我是greenyellow
+</div>
+
+
+<h4>获取session作用域中数据: <span th:text="${session.username}"></span></h4>
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /springboot_day4
+
+
+
+#整合mybatis
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bootssm?characterEncoding=UTF-8
+    username: root
+    password: root
+
+
+mybatis:
+  mapper-locations: classpath:com/baizhi/mapper/*.xml
+  type-aliases-package: com.baizhi.entity
+
+
+
+#配置日志
+logging:
+  level:
+    root: info #调整全局日志展示为debug
+    com.baizhi.dao: debug #输出指定包的日志
+    com.baizhi.service: debug #输出指定的包的日志
+  file:
+    name: run.log #指定生成日志文件名称
+    path: ./ #将日志文件生成当前目录 (当前项目的目录中)
+
+
+
+

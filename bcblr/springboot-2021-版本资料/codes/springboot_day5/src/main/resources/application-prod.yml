@@ -1,0 +1,5 @@
+
+# 指定文件上传位置
+file:
+  upload:
+    dir: /home/upload #指定本地测试上传目录

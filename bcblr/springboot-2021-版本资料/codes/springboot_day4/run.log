@@ -1,0 +1,12 @@
+2021-06-21 20:05:44.658  INFO 4671 --- [main] com.baizhi.UserServiceTests              : Starting UserServiceTests using Java 1.8.0_161 on bogon with PID 4671 (started by chenyn in /Users/chenyn/Desktop/线上课/项目阶段/01springboot/codes/springboot_day4)
+2021-06-21 20:05:44.671  INFO 4671 --- [main] com.baizhi.UserServiceTests              : No active profile set, falling back to default profiles: default
+2021-06-21 20:05:47.758  INFO 4671 --- [main] com.baizhi.UserServiceTests              : Started UserServiceTests in 3.763 seconds (JVM running for 5.512)
+2021-06-21 20:05:47.760  INFO 4671 --- [main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2021-06-21 20:05:47.762  INFO 4671 --- [main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2021-06-21 20:05:48.255  INFO 4671 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2021-06-21 20:05:48.540 DEBUG 4671 --- [main] com.baizhi.service.UserServiceImpl       : 姓名: 小黑123456===>参数1===>参数2
+2021-06-21 20:05:48.542 DEBUG 4671 --- [main] com.baizhi.service.UserServiceImpl       : 工资: 2300.23
+2021-06-21 20:05:48.543 DEBUG 4671 --- [main] com.baizhi.service.UserServiceImpl       : 生日: Mon Jun 21 20:05:48 CST 2021
+2021-06-21 20:05:48.567 DEBUG 4671 --- [main] com.baizhi.dao.UserDao.save              : ==>  Preparing: insert into `user` values(?,?,?,?)
+2021-06-21 20:05:48.597 DEBUG 4671 --- [main] com.baizhi.dao.UserDao.save              : ==> Parameters: null, 小黑123456(String), 2021-06-21 20:05:48.101(Timestamp), 2300.23(Double)
+2021-06-21 20:05:48.600 DEBUG 4671 --- [main] com.baizhi.dao.UserDao.save              : <==    Updates: 1

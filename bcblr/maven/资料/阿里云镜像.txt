@@ -1,0 +1,17 @@
+ 
+ 
+ <mirror>
+	 <id>nexus</id>
+	 <name>nexus</name>
+	 <url>http://localhost:8081/nexus/content/groups/public/</url>
+	 <mirrorOf>central</mirrorOf>
+ </mirror>
+ 
+
+<!--°¢ÀïÔÆ¾µÏñ-->
+<mirror>  
+  <id>alimaven</id>  
+  <name>aliyun maven</name>  
+  <url>http://maven.aliyun.com/nexus/content/groups/public/</url>  
+  <mirrorOf>*</mirrorOf>          
+</mirror> 

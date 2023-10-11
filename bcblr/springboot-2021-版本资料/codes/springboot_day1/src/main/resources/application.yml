@@ -1,0 +1,12 @@
+
+
+#公共配置
+server:
+  port: 8081 # 修改内嵌服务器端口号
+  #servlet:
+    #context-path: /springboot_day1 #修改项目名 注意:项目名必须 "/" 开头
+
+# 激活那个环境配置
+spring:
+  profiles:
+    active: prod #让dev环境生效

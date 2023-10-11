@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baizhi.dao.EmployeeDao">
+
+
+
+
+    <!--员工列表-->
+    <select id="list" resultType="Employee">
+        select id,name,birthday,salary,gender from `employee`
+    </select>
+
+
+
+    <!--添加员工信息-->
+    <insert id="add" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into `employee` values(#{id},#{name},#{birthday},#{salary},#{gender})
+    </insert>
+
+
+    <!--根据id查询一个员工信息-->
+    <select id="idByEmployee" parameterType="Integer" resultType="Employee">
+        select id,name,birthday,salary,gender from `employee`
+        where id = #{id}
+    </select>
+
+    <!--更新员工信息-->
+    <update id="update" parameterType="Employee">
+        update `employee` set name=#{name},birthday=#{birthday},salary=#{salary},gender=#{gender}
+        where id = #{id}
+    </update>
+
+    <!--根据id删除员工信息-->
+    <delete id="delete" parameterType="Integer">
+        delete from `employee` where id=#{id}
+    </delete>
+
+
+</mapper>

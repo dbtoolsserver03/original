@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/springboot_day6" />
+    <file type="web" url="file://$PROJECT_DIR$/ssm" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ssm/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day1/pom.xml" />
+        <option value="$USER_HOME$/Downloads/springboot_day2/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day2/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day3/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day4/pom.xml" />
+        <option value="$PROJECT_DIR$/ems-jsp/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day5/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day6/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day7/pom.xml" />
+        <option value="$PROJECT_DIR$/ems-thymeleaf/pom.xml" />
+        <option value="$PROJECT_DIR$/ems-jsp/springboot_day8_restful/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day8_restful/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day9/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_day10/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

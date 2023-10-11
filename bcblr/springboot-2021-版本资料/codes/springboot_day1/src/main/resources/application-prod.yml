@@ -1,0 +1,3 @@
+server:
+  servlet:
+    context-path: /springboot #生产项目名
