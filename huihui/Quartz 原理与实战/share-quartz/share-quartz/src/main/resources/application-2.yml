@@ -1,0 +1,7 @@
+
+spring:
+  quartz:
+    properties:
+      org.quartz.scheduler.instanceName: OrderService
+      org.quartz.scheduler.instanceId: Order_2
+      org.quartz.jobStore.isClustered: true

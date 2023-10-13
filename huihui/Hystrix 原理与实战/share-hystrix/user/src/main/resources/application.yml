@@ -1,0 +1,35 @@
+server:
+  port: 8200
+spring:
+  application:
+    name: user
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka
+management:
+  security:
+    enabled: false
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 3000
+    IFeignActivityService#firstLogin(Long):
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 3000

@@ -1,0 +1,13 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: turbine
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka
+
+turbine:
+  appConfig: user  # 可以聚合多个服务，用逗号隔开
+  clusterNameExpression: "'default'"

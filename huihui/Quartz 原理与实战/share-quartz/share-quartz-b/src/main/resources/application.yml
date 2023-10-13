@@ -1,0 +1,25 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_quartz?characterEncoding=utf8&characterSetResults=utf8&useSSL=false&eserverTimezone=GMT%2b8
+    username: root
+    password: root
+
+
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+#      initialize-schema: NEVER
+      initialize-schema: always
+
+
+
+#    properties:
+#      org.quartz.threadPool.threadCount: 3
+
+#    properties:
+#      org:
+#        quartz:
+#          threadPool:
+#            threadCount: 3
+

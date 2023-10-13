@@ -1,0 +1,8 @@
+
+spring:
+  quartz:
+    properties:
+      org.quartz.scheduler.instanceName: ResourcesService
+      org.quartz.scheduler.instanceId: Resources_1
+      org.quartz.jobStore.isClustered: true
+      org.quartz.threadPool.threadCount: 3
