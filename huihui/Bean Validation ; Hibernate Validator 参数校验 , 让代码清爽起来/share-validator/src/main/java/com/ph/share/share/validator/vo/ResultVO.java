@@ -10,7 +10,7 @@ public class ResultVO {
      */
     private boolean success;
     /**
-     * 错误码
+     * 错误码 
      */
     private String code;
     /**
