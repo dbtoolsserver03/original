@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <!-- cache配置 -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true" />
+
+    <!-- 添加一个用户 -->
+    <insert id="addUser" parameterType="com.entity.User">
+        insert into t_user (userName,password)
+        values(#{userName},#{password})
+    </insert>
+    <!-- 查询所有数据 -->
+    <select id="selectAllUser" resultType="com.entity.User">
+        select id,addTime,userName,password from t_user
+    </select>
+
+    <!-- 查询所有数据 -->
+    <select id="getById" resultType="com.entity.User">
+        select id,addTime,userName,password from t_user where id = #{id}
+    </select>
+</mapper>

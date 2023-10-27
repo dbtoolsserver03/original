@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+
+    <resultMap id="baseMap" type="com.entity.User">
+        <id column="id" property="id" javaType="Long" jdbcType="BIGINT"/>
+        <result column="addTime" property="addTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="userName" property="userName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.entity.User">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="addTime" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <association
+                property="address"
+                column="address_id"
+                javaType="com.entity.Address"
+                select="com.mapper.AddressMapper.getById"/>
+
+        <collection
+                property="goods"
+                ofType="com.entity.Goods"
+                column="id"
+                select="com.mapper.GoodsMapper.getByUserId"/>
+
+    </resultMap>
+
+    <resultMap id="BaseResultMapOneToOneLeftJoin" type="com.entity.User">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="addTime" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <association property="address" javaType="com.entity.Address">
+            <id column="mid" jdbcType="BIGINT" property="id" />
+            <result column="maddTime" jdbcType="TIMESTAMP" property="addTime" />
+            <result column="maddress" jdbcType="VARCHAR" property="address" />
+        </association>
+
+        <collection property="goods" ofType="com.entity.Goods" >
+            <id column="gid" jdbcType="BIGINT" property="id" />
+            <result column="gaddTime" jdbcType="TIMESTAMP" property="addTime" />
+            <result column="ggoodsName" jdbcType="VARCHAR" property="goodsName" />
+            <result column="userId" jdbcType="BIGINT" property="userId" />
+        </collection>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,addTime,userName,password,age,sex,address_id
+    </sql>
+
+    <select id="getByUsername" parameterType="string" resultType="com.entity.User">
+        select <include refid="Base_Column_List" /> from t_user
+        <where>
+            <if test="userName != null and userName != ''">
+                 userName = #{userName}
+            </if>
+            <if test="id == 2">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getByUsernameAndPassword" resultType="com.entity.User">
+        select <include refid="Base_Column_List" /> from t_user
+        where
+        <choose>
+            <when test="userName!=null">
+                userName like CONCAT('%',#{userName},'%')
+            </when>
+            <when test="password!=null">
+                password like CONCAT('%',#{password},'%')
+            </when>
+            <otherwise>
+                 userName is not null
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getByIdCheck" resultType="com.entity.User">
+        select <include refid="Base_Column_List" /> from t_user
+        where
+        <choose>
+            <when test="id > 10">
+                id = #{id} and password is not null
+            </when>
+            <when test="id lte 10">
+                id = #{id} and userName is not null
+            </when>
+            <otherwise>
+                id = #{id}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 会出现N+1问题:在以前的hibernate框架是非常常见的 -->
+    <!-- 携程:统计要跑10来个小时 就是SQL写的问题 -->
+    <!-- 西瓜视频 数据分析 也是两三天前的 -->
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getByIdLeftJoin" parameterType="java.lang.Long" resultMap="BaseResultMapOneToOneLeftJoin">
+        <!-- 这里为了t_user和t_address表中的字段冲突 所以子表建议起个别名 上面的映射column也要对应上 -->
+        select
+               u.*,
+               a.id as mid ,
+               a.addTime as maddTime,
+               a.address as maddress,
+               g.id as gid,
+               g.addTime as gaddTime,
+               g.goodsName as ggoodsName,
+               u.id as userId
+        from t_user u
+            left join t_address a on u.address_id = a.id
+            left join t_goods g on g.user_id = u.id
+        where u.id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <!-- 添加一个用户 -->
+    <insert id="addUser" parameterType="com.entity.User">
+        insert into t_user (userName,password)
+        values(#{userName},#{password})
+    </insert>
+    <!-- 查询所有数据 -->
+    <select id="selectAllUser" resultMap="baseMap">
+        select id,addTime,userName,password from t_user
+    </select>
+
+    <!--
+     select:用来查询 单条 多条
+     id:唯一id
+     parameterType:参数类型
+     resultType:结果类型
+     #{id}:jdbc 问号? #{}获取参数
+     ${}:会有SQL注入问题
+     -->
+    <select id="selectUserById" parameterType="long" resultType="com.entity.User">
+        select id,addTime,userName,password from t_user where id = #{id}
+    </select>
+
+    <select id="selectUserByUserNameAndPassword" resultType="com.entity.User">
+        select id,addTime,userName,password from t_user where username=#{userName} and password=#{password}
+    </select>
+
+    <select id="selectUserByJavaBean" resultType="com.entity.User" parameterType="com.entity.User">
+        select id,addTime,userName,password from t_user where username=#{userName} and password=#{password}
+    </select>
+
+    <insert id="insertMap" parameterType="map">
+        insert into t_user (userName,password) values(#{userName},#{password})
+    </insert>
+
+    <insert id="insertParam" >
+        insert into t_user (userName,password) values(#{userName},#{password})
+    </insert>
+
+    <insert id="insertJavaBean" keyProperty="id" useGeneratedKeys="true">
+        <!-- 这种用法 ID类型必须是整型数字类型 -->
+        <selectKey keyProperty="id" resultType="Long" order="BEFORE">
+            select if(max(id) is null,1,max(id)+1) as newId from t_user
+        </selectKey>
+
+        insert into t_user (id,userName,password) values(#{id},#{userName},#{password})
+    </insert>
+
+    <update id="updateMap" parameterType="map">
+        update t_user set username=#{userName} , password=#{password} where id=#{id}
+    </update>
+
+    <update id="updateParam">
+        update t_user set username=#{userName} , password=#{password} where id=#{id}
+    </update>
+
+    <update id="updateJavaBean" parameterType="com.entity.User">
+        update t_user set username=#{userName} , password=#{password} where id=#{id}
+    </update>
+
+    <delete id="deleteMap">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <delete id="deleteParam">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <delete id="deleteJavaBean">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="com.entity.User">
+        update t_user
+        <set>
+            <if test="userName!=null">
+                userName = #{userName},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="addTime!=null">
+                addTime=#{addTime}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </update>
+
+    <select id="foreachQuery" resultType="com.entity.User">
+        select
+        <include refid="Base_Column_List" />
+        from t_user where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="foreachInsert" >
+        insert into t_user(addTime,userName,password) values
+        <foreach collection="array" item="user" index="index"  separator="," >
+            (#{user.addTime},#{user.userName},#{user.password})
+        </foreach>
+    </insert>
+
+    <select id="bindQuery"  resultType="com.entity.User">
+        <bind name="pattern_userName" value="'%'+userName+'%'" />
+        <bind name="pattern_password" value="'%'+password+'%'" />
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where userName like #{pattern_userName} or password like #{pattern_password}
+    </select>
+
+
+    <select id="cdataQuery" resultType="com.entity.User">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where id <![CDATA[ <= ]]> 10
+    </select>
+
+    <select id="selectTrim" resultType="com.entity.User">
+        select id,addTime,userName,password from t_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userName!=null">
+                and userName=#{userName}
+            </if>
+            <if test="password!=null">
+                and password=#{password}
+            </if>
+        </trim>
+    </select>
+</mapper>

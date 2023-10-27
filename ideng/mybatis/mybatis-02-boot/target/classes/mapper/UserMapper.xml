@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.mapper.UserMapper">
+
+    <select id="list" resultType="com.boot.entity.User">
+        select id,addTime,userName,password from t_user
+    </select>
+
+    <delete id="deleteById" parameterType="long">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <select id="pages" parameterType="java.util.Map" resultType="com.boot.entity.User">
+        select
+            id,addTime,userName,password
+        from t_user
+        limit ${start},${pageSize}
+    </select>
+
+    <select id="listAll" resultType="com.boot.entity.User">
+        select id,addTime,userName,password from t_user where id &lt; 50
+    </select>
+
+    <!-- 添加一个用户 -->
+    <insert id="addUser" parameterType="com.boot.entity.User">
+        <selectKey order="AFTER" resultType="long" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+
+        insert into t_user (userName,password) values(#{userName},#{password})
+    </insert>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Goods">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="addTime" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="goodsName" jdbcType="VARCHAR" property="goodsName" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,addTime,goodsName,user_id
+    </sql>
+
+    <select id="getByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_goods
+        where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+</mapper>
