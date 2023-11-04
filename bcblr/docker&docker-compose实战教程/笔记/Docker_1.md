@@ -291,6 +291,28 @@ For more examples and ideas, visit:
 
 ![image-20231027101422312](./Docker_1.assets/image-20231027101422312.png)
 
+![image-20231101195340437](./Docker_1.assets/image-20231101195340437.png)
+
+![image-20231027102924137](./Docker_1.assets/image-20231027102924137.png)
+
+
+
+![image-20231103075814197](./Docker_1.assets/image-20231103075814197.png)
+
+![image-20231103085131422](./Docker_1.assets/image-20231103085131422.png)
+
+![image-20231103085153767](./Docker_1.assets/image-20231103085153767.png)
+
+
+
+![image-20231103085637563](./Docker_1.assets/image-20231103085637563.png)
+
+![image-20231103085749777](./Docker_1.assets/image-20231103085749777.png)
+
+![image-20231103085824427](./Docker_1.assets/image-20231103085824427.png)
+
+![image-20231103085452351](./Docker_1.assets/image-20231103085452351.png)
+
 ### 6.3 Contrainer 容器命令
 
 ~~~markdown
@@ -306,7 +328,7 @@ For more examples and ideas, visit:
 # 2.查看运行的容器
 	docker ps					--------------------------	列出所有正在运行的容器
 	-a			正在运行的和历史运行过的容器
-	-q			静默模式，只显示容器编号
+	-q		静默模式，只显示容器编号
 
 # 3.停止|关闭|重启容器
 	docker start   容器名字或者容器id  --------------- 开启容器
@@ -315,6 +337,7 @@ For more examples and ideas, visit:
 	docker kill  容器名或者容器id      ------------------ 立即停止容器运行
 
 # 4.删除容器
+  运行中的容器删除不了，需要强制删除
 	docker rm -f 容器id和容器名     
 	docker rm -f $(docker ps -aq)		--------------------------	删除所有容器
 
@@ -334,6 +357,7 @@ For more examples and ideas, visit:
 	docker exec [options] 容器id 容器内命令 ------------------ 进入容器执行命令
 		-i		以交互模式运行容器，通常与-t一起使用
     -t		分配一个伪终端    shell窗口   bash 
+    例： docker exec -it tomcat01 bash 
 
 # 9.容器和宿主机之间复制文件
 	docker cp 文件|目录 容器id:容器路径           -----------------   将宿主机复制到容器内部
@@ -356,6 +380,28 @@ For more examples and ideas, visit:
 ~~~
 
 ----
+
+
+
+![image-20231103091959954](./Docker_1.assets/image-20231103091959954.png)
+
+
+
+![image-20231103092013910](./Docker_1.assets/image-20231103092013910.png)
+
+做Image 镜像
+
+![image-20231103092213480](./Docker_1.assets/image-20231103092213480.png)
+
+打包
+
+![image-20231103092327727](./Docker_1.assets/image-20231103092327727.png)
+
+
+
+还原
+
+![image-20231103092130371](./Docker_1.assets/image-20231103092130371.png)
 
 ## 7.docker的镜像原理
 
@@ -399,6 +445,12 @@ For more examples and ideas, visit:
 
 ### 8.1 安装mysql
 
+
+
+![image-20231103134111043](./Docker_1.assets/image-20231103134111043.png)
+
+![image-20231103141624344](./Docker_1.assets/image-20231103141624344.png)
+
 ```markdown
 # 1.拉取mysql镜像到本地
 	docker pull mysql:tag (tag不加默认最新版本)
@@ -430,7 +482,17 @@ For more examples and ideas, visit:
 	docker exec -i mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < /root/xxx.sql
 ```
 
+
+
+
+
 ### 8.2 安装Redis服务
+
+![image-20231103150050303](./Docker_1.assets/image-20231103150050303.png)
+
+![image-20231103145949350](./Docker_1.assets/image-20231103145949350.png)
+
+
 
 ```markdown
 # 1.在docker hub搜索redis镜像
@@ -463,7 +525,13 @@ For more examples and ideas, visit:
 	docker run --name redis -v /root/redis/data:/data -v /root/redis/redis.conf:/usr/local/etc/redis/redis.conf -p 6379:6379 -d redis redis-server 					/usr/local/etc/redis/redis.conf  
 ```
 
-### 8.3 安装Nginx
+### 8.3 安装Nginx 
+
+![image-20231103153801522](./Docker_1.assets/image-20231103153801522.png)
+
+
+
+
 
 ```markdown
 # 1.在docker hub搜索nginx
@@ -545,6 +613,14 @@ For more examples and ideas, visit:
 
 ### 8.6 安装ElasticSearch
 
+
+
+![image-20231103181343902](./Docker_1.assets/image-20231103181343902.png)
+
+
+
+
+
 - `注意:`**调高JVM线程数限制数量**
 
 #### 0.拉取镜像运行elasticsearch
@@ -586,6 +662,8 @@ For more examples and ideas, visit:
 
 #### 3.安装IK分词器
 
+![image-20231103183431744](./Docker_1.assets/image-20231103183431744.png)
+
 ```markdown
 # 1.下载对应版本的IK分词器
 	wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.4.2/elasticsearch-analysis-ik-6.4.2.zip
@@ -617,6 +695,8 @@ For more examples and ideas, visit:
 ```
 
 #### 4. 安装Kibana
+
+![image-20231103184736655](./Docker_1.assets/image-20231103184736655.png)
 
 ```markdown
 # 1.下载kibana镜像到本地
@@ -651,7 +731,49 @@ Error response from daemon: Get https://index.docker.io/v1/search?q=mysql&n=25: 
 
 ![image-20200602183718623](Docker_1.assets/image-20200602183718623.png)
 
+
+
+
+
+------------------------
+
+![image-20231103190028510](./Docker_1.assets/image-20231103190028510.png)
+
+![image-20231103190739794](./Docker_1.assets/image-20231103190739794.png)
+
+
+
+![image-20231103190650102](./Docker_1.assets/image-20231103190650102.png)
+
+![image-20231103191633538](./Docker_1.assets/image-20231103191633538.png)
+
+
+
+![image-20231103192501782](./Docker_1.assets/image-20231103192501782.png)
+
+
+
+ 高级数据卷配置
+
+![image-20231103200541634](./Docker_1.assets/image-20231103200541634.png)
+
+![image-20231103200555828](./Docker_1.assets/image-20231103200555828.png)
+
+
+
+
+
+
+
+
+
 ## 9.Dockerfile
+
+
+
+ 
+
+
 
 ### 9.1 什么是Dockerfile
 
@@ -665,13 +787,29 @@ Dockerfile可以认为是**Docker镜像的描述文件，是由一系列命令�
 
 ![image-20200603181253804](Docker_1.assets/image-20200603181253804.png)
 
+
+
+![image-20231103202115214](./Docker_1.assets/image-20231103202115214.png)
+
+![image-20231103232754089](./Docker_1.assets/image-20231103232754089.png)
+
+![image-20231103232804856](./Docker_1.assets/image-20231103232804856.png)
+
+
+
+![image-20231103232850700](./Docker_1.assets/image-20231103232850700.png)
+
 ### 9.3 Dockerfile的保留命令
+
+![image-20231103202612312](./Docker_1.assets/image-20231103202612312.png)
+
+![image-20231103202957188](./Docker_1.assets/image-20231103202957188.png)
 
 官方说明:https://docs.docker.com/engine/reference/builder/
 
 | 保留字         | 作用                                                         |
 | -------------- | ------------------------------------------------------------ |
-| **FROM**       | **当前镜像是基于哪个镜像的** `第一个指令必须是FROM`          |
+|                | **当前镜像是基于哪个镜像的** `第一个指令必须是FROM`          |
 | MAINTAINER     | 镜像维护者的姓名和邮箱地址                                   |
 | **RUN**        | **构建镜像时需要运行的指令**                                 |
 | **EXPOSE**     | **当前容器对外暴露出的端口号**                               |
@@ -863,6 +1001,20 @@ http://10.15.0.8:8989/ems/login.html
 ![image-20200605173141636](Docker_1.assets/image-20200605173141636.png)
 
 ---
+
+![image-20231104000808143](./Docker_1.assets/image-20231104000808143.png)
+
+
+
+![image-20231104000937993](./Docker_1.assets/image-20231104000937993.png) 
+
+
+
+![image-20231104001119767](./Docker_1.assets/image-20231104001119767.png)
+
+
+
+
 
 ## 10.高级网络配置
 

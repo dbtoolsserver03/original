@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- <settings>
+         <setting name="cacheEnabled" value="true"/>
+     </settings>-->
+
+
+    <typeAliases>
+        <typeAlias type="com.baizhiedu.entity.User" alias="User"/>
+        <typeAlias type="com.baizhiedu.entity.Account" alias="Account"/>
+    </typeAliases>
+
+
+    <plugins>
+        <!--<plugin interceptor="com.baizhiedu.plugins.MyMybatisInterceptor">
+            <property name="test" value="111111"/>
+        </plugin>-->
+        <!--<plugin interceptor="com.baizhiedu.plugins.MyMybatisInterceptor2"/>-->
+        <!--<plugin interceptor="com.baizhiedu.plugins.MyMybatisInterceptor3"/>-->
+      <!--  <plugin interceptor="com.baizhiedu.plugins.PageHelperInterceptor1">
+            <property name="queryMethodPrefix" value="query"/>
+            <property name="queryMethodSuffix" value="ByPage"/>
+        </plugin>-->
+        <plugin interceptor="com.baizhiedu.plugins.LockInterceptor"/>
+    </plugins>
+
+    <environments default="default">
+        <environment id="default">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"></property>
+                <property name="url" value="jdbc:mysql://localhost:3306/suns?useSSL=false"></property>
+                <property name="username" value="root"></property>
+                <property name="password" value="123456"></property>
+            </dataSource>
+        </environment>
+        <!--    <environment id="oracle">
+                <transactionManager type="JDBC"></transactionManager>
+                <dataSource type="POOLED">
+                    <property name="driver" value="oracle.jdbc.OracleDriver"></property>
+                    <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+                    <property name="username" value="hr"/>
+                    <property name="password" value="hr"/>
+                </dataSource>
+            </environment>-->
+    </environments>
+
+    <mappers>
+        <!--<package name=""-->
+        <mapper resource="UserDAOMapper.xml"/>
+        <mapper resource="AccountDAOMapper.xml"/>
+    </mappers>
+
+
+</configuration>

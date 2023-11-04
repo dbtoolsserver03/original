@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suns</title>
+    <script type="text/javascript">
+
+        let socket
+
+        if (window.WebSocket) {
+            socket = new WebSocket("ws://localhost:8000/suns");
+
+            socket.onmessage = function (result) {
+                let reviceMessage = document.getElementById("reciveMessage")
+                reviceMessage.value = reviceMessage.value + "\n" + result.data
+            }
+
+            socket.onclose = function (result) {
+                let reviceMessage = document.getElementById("reciveMessage")
+                reviceMessage.value = reviceMessage.value + "\n" + "连接关闭"
+            }
+        }
+
+        //发送ws请求
+        function send() {
+            let message = document.getElementById('message')
+            if (socket.readyState == WebSocket.OPEN) {
+                socket.send(message.value);
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    <textarea id="message" style="height: 300px;width: 300px;"></textarea>
+    <input type="button" value="click" onclick="send()"/>
+    <textarea id="reciveMessage" style="height: 300px;width: 300px;"></textarea>
+</body>
+</html>
