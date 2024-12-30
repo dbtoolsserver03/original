@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    username: root
+    password: admin
+    url: jdbc:mysql://127.0.0.1:3306/springbatch?serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 初始化数据库，文件在依赖jar包中
+  sql:
+    init:
+      schema-locations: classpath:org/springframework/batch/core/schema-mysql.sql
+      #mode: always
+      mode: never
+
+#  batch:
+#    job:
+#      enabled: false   #false表示不启动
